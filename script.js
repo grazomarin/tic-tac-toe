@@ -3,8 +3,11 @@ const board = document.getElementById('board')
 
 cells.forEach(cell => {
     cell.addEventListener('click', () => {
+        if (cell.classList.length < 2){
             cell.classList.add(board.classList[1])
             changePlayer();
+        }
+        return
     })
 });
 
