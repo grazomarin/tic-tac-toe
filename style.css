@@ -32,7 +32,7 @@ body {
     cursor: pointer;
 }
 
-.cell:nth-child(-n + 9){
+.cell:nth-child(-n + 3){
     border-top: none;
 }
 
