@@ -12,13 +12,14 @@ const WINNING_COMBINATIONS = [
 ]
 const board = document.getElementById('board')
 const cellElements = document.querySelectorAll('[data-cell]')
-
+const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
+const winningMessageElement = document.querySelector('.winning-message')
 
 cellElements.forEach(cell => {
     cell.addEventListener('click', () => {
         cell.classList.add(board.classList[1])
         if (checkWin(board.classList[1])) {
-            console.log('winner')
+            endGame(false, board.classList[1]);
         }
         changePlayer();
     }, { once: true })
@@ -40,4 +41,13 @@ function checkWin(currentClass) {
             return cellElements[index].classList.contains(currentClass)
         })
     })
+}
+
+function endGame (draw, player) {
+    if (draw) {
+
+    } else {
+        winningMessageTextElement.innerText = `${player.toUpperCase()} Wins!`
+    }
+    winningMessageElement.classList.add('show')
 }
