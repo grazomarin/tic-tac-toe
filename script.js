@@ -14,15 +14,20 @@ const board = document.getElementById('board')
 const cellElements = document.querySelectorAll('[data-cell]')
 const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
 const winningMessageElement = document.querySelector('.winning-message')
+const restartBtn = document.getElementById('restartButton')
 
 cellElements.forEach(cell => {
-    cell.addEventListener('click', () => {
-        cell.classList.add(board.classList[1])
-        if (checkWin(board.classList[1])) {
-            endGame(false, board.classList[1]);
+    cell.addEventListener('click', handleClick = () => {
+        if (cell.classList.length !== 2) {
+            cell.classList.add(board.classList[1])
+            if (checkWin(board.classList[1])) {
+                endGame(false, board.classList[1]);
+            } else if (isDraw()) {
+                endGame(true)
+            }
+            changePlayer();
         }
-        changePlayer();
-    }, { once: true })
+    })
 });
 
 function changePlayer () {
@@ -43,11 +48,25 @@ function checkWin(currentClass) {
     })
 }
 
+function isDraw() {
+    if(
+        [...cellElements].every(cell => {
+            return cell.classList.length === 2
+        })
+    ) {return true}
+}
+
 function endGame (draw, player) {
     if (draw) {
-
+        winningMessageTextElement.textContent = `It's a Draw!`
     } else {
-        winningMessageTextElement.innerText = `${player.toUpperCase()} Wins!`
+        winningMessageTextElement.textContent = `${player.toUpperCase()} Wins!`
     }
     winningMessageElement.classList.add('show')
 }
+
+restartBtn.addEventListener('click', () => {
+    board.classList = 'board x';
+    cellElements.forEach(cell => cell.classList = 'cell')
+    winningMessageElement.classList.remove('show')
+})
